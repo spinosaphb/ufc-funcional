@@ -2,7 +2,6 @@
 indice' xs n i | i == (length xs)-1 = -1
 indice' xs n i = if(xs!!i==n) then i else indice' xs n (i+1)
 indice xs n = indice' xs n 0
-
 --00 menor de 2
 menor2 x y = if x > y then y else x
 --01 menor de 3
@@ -33,7 +32,7 @@ maior xs = do
     if(xs!!((length xs)-1) > xs!!0) then
         maior (tail xs)
     else
-         maior (init xs)
+        maior (init xs)
 --08 lista o total de ocorrencias de n em xs
 frequence xs n = length[i|i<-xs,i==n]
 --09 True se n ocorre exatamente 1 vez em xs
@@ -47,20 +46,16 @@ calda xs = drop 1 xs
 --13 corpo
 corpo xs = take ((length xs) - 1) xs
 --14 lista xs sem repeticoes
-unique' xs i | i == ((length xs) - 1) = xs
-unique' xs i = do
-    if(unico xs (xs!!i)) then
-        unique' xs (i+1)
-    else
-        unique' (take (i+1) xs ++ [j|j<-[z|z<-drop i xs],if j == (xs!!i) then unico xs j else j==j]) (i+1)
-unique xs = unique' xs 0
+unique' [] xn = xn
+unique' xs xn = unique' (tail xs) (xn++[i|i<-[head xs],not(pertence xn i)])
+unique xs = unique' xs []
 --15 lista de n menores elementos de xs na ordem em que aparecem
 menores xs n | n == (length xs) = xs
 menores xs n = menores [i|i<-xs,i/=(maior xs)] n
 --16 lista todos os inteiros alternados ate n
 alter' xs n i | i == n = (xs++[i]++[i*(-1)])
-alter' xs i n = alter' (xs++[i]++[i*(-1)]) n (i+1)
-alter n = alter' [] 1 n
+alter' xs n i = alter' (xs++[i]++[i*(-1)]) n (i+1)
+alter n = alter' [] n 1
 --17 lista xs em ordem reversa
 reverso' [] xv = xv
 reverso' xs xv = reverso' (init xs) (xv++[last xs])
@@ -72,3 +67,26 @@ divide xs n = tuplefy([(take (n) xs)]++[(drop (n) xs)])
 intercal' xs xn xv | (length (xs++xn)) == 0 = xv
 intercal' xs xn xv = intercal' (tail xs) (tail xn) (xv++[head xs]++[head xn])
 intercal xs xn = intercal' xs xn []
+--20 duas listas a e b sem repeticoes
+uniao xa xb = unique (xa++xb)
+--21 intercao de duas listas
+intersec xa xb = unique[i|i<-(xa++xb),not $ unico (xa++xb) i]
+--22 comparar se duas listas sao iguais
+igual xs [] = False
+igual [] xs = False
+igual [] [] = True
+igual xs xz = do
+    if(xs!!0 == xz!!0) then
+        igual (tail xs) (tail xz)
+    else
+        False
+--23 retorna -1 se o primeiro for menor , 1 se o primeiro for maior, 0 caso igual
+strequal [] [] = 0
+strequal xs xz = do
+    if(xs!!0 == xz!!0) then
+        strequal (tail xs) (tail xz)
+    else
+        if(xs!!0 < xz!!0) then
+            (-1)
+        else
+            1
