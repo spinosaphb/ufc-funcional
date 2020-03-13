@@ -1,4 +1,4 @@
--- bruid force
+
    
 sublist n n' xs | n' < 0 && n >= 0 = drop n (take ((length xs) + n') xs)  
 sublist n n' xs | n < 0 && n' < 0 = sublist 0 n' (drop ((length xs) + n) xs)
