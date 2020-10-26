@@ -113,7 +113,7 @@ isSorted xs = do
 ---0.25 deleta um elemento da lista
 delete' x i xs = do
     if(x == xs!!i) then
-        (take (i-1) xs)++(drop (i+1) xs)
+        (take (i) xs)++(drop (i+1) xs)
     else
         delete' x (i+1) xs
 delete x xs = delete' x 0 xs; 
