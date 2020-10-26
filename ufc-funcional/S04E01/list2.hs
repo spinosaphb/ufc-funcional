@@ -1,0 +1,1 @@
+countNeg xs = length [i|i<-xs,i<0]
