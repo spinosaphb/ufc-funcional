@@ -1,0 +1,1 @@
+mapFold f xs = [f i| i <- xs]
